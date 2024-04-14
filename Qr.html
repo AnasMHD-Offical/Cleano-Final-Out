@@ -1,0 +1,37 @@
+<!--Index.html-->
+<!DOCTYPE html> 
+<html lang="en"> 
+
+<head> 
+    <link rel="shortcut icon" href="image/cleano2.png" type="image/x-icon">
+    <title>Qr Code</title>
+	<link rel="stylesheet" href="Qr.css" /> 
+
+	<!-- External QR code library -->
+	<!--This is the liberary which helps 
+		to convert simple data to the images-->
+	<script src= 
+"https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"> 
+	</script> 
+</head> 
+
+<body> 
+	<div class="header"> 
+		<div class="box"> 
+			<h1> 
+				Scan Cleano Qr-Code 
+			</h1> 
+			<hr /> 
+			<div class="sqrcode"></div> 
+			<div class="qrcode"></div> 
+			<input type="text"
+				placeholder="Enter your Cleano Id" 
+				onchange="generateQr()" /> 
+			<!--generateQr() is the fuction which helps 
+				to convert data into QR using the js library-->
+		</div> 
+	</div> 
+	<script src="Qr.js"></script> 
+</body> 
+
+</html>
