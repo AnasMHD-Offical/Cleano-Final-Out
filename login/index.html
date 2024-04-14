@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title> Login Page</title>
+</head>
+
+<body>
+
+    <div class="container" id="container">
+        <div class="form-container sign-up">
+            <form>
+                <h1>Register</h1>
+                <div class="social-icons">
+                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+                <span>or use your email for registeration</span>
+                <input id="signUpName" type="text" placeholder="Name">
+                <input id="signUpEmail" type="email" placeholder="Email">
+                <input id="signUpPassword" type="password" placeholder="Password">
+                <button id="signUpButton">SIGN UP</button>
+            </form>
+        </div>
+        <div class="form-container sign-in">
+            <form>
+                <h1>Sign In</h1>
+                <div class="social-icons">
+                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+                <span>or use your email password</span>
+                <input id="loginEmail" type="email" placeholder="Email">
+                <input id="loginPassword" type="password" placeholder="Password">
+                <a href="#">Forget Your Password?</a>
+                <button id="signInButton">Sign In</button>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Welcome Back!</h1>
+                    <p>Enter your personal details to use all of site features</p>
+                    <button class="hidden" id="login">Sign In</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Register with your personal details to use all of site features</p>
+                    <button class="hidden" id="register">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js'
+    
+        // If you enabled Analytics in your project, add the Firebase SDK for Google Analytics
+        import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js'
+    
+        // Add Firebase products that you want to use
+        import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js'
+        import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js'
+    
+        const firebaseConfig = {
+  apiKey: "AIzaSyCYkEuJQkeM9oYaxlhGnf_NgbwzpvPH9Wo",
+  authDomain: "cleno-14f63.firebaseapp.com",
+  projectId: "cleno-14f63",
+  storageBucket: "cleno-14f63.appspot.com",
+  messagingSenderId: "916539133133",
+  appId: "1:916539133133:web:9e7cde9075a87479a02d84"
+};
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth();
+    
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          window.location = "/cleano/dashboard"
+        }
+      });
+
+      document.getElementById("signInButton").addEventListener("click", (event) => {
+        event.preventDefault();
+
+        let loginEmail = document.getElementById("loginEmail").value;
+        let loginPassword = document.getElementById("loginPassword").value;
+
+        if (!loginEmail) {
+            alert("Enter a valid Email Id");
+            return;
+        }
+
+        if (!loginPassword) {
+            alert("Enter a valid Password");
+            return;
+        }
+
+        signInWithEmailAndPassword(auth, loginEmail, loginPassword).then((userCredentials) => {
+
+        }).catch((e) => {
+            console.log(e);
+            alert("Failed to login!");
+        });
+
+      });
+
+      //SIGN UP
+      document.getElementById("signUpButton").addEventListener("click", (event) => {
+        event.preventDefault();
+
+        let signUpName = document.getElementById("signUpName").value;
+        let signUpEmail = document.getElementById("signUpEmail").value;
+        let signUpPassword = document.getElementById("signUpPassword").value;
+
+        if (!signUpName) {
+            alert("Enter a valid Name");
+            return;
+        }
+
+        if (!signUpEmail) {
+            alert("Enter a valid Email Id");
+            return;
+        }
+
+        if (!signUpPassword) {
+            alert("Enter a valid Password");
+            return;
+        }
+
+        createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword).then((userCredentials) => {
+            updateProfile(auth.currentUser, {
+                displayName: signUpName
+            });
+        }).catch((e) => {
+            console.log(e);
+            alert("Failed to login!");
+        });
+
+      });
+    
+      </script>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
